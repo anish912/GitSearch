@@ -19,4 +19,7 @@ interface RepositoryDao {
 
     @Query("DELETE FROM repositories WHERE ownerLogin = :username")
     suspend fun clearUserRepositories(username: String)
+
+    @Query("DELETE FROM repositories")
+    suspend fun clearAllRepositories()
 }

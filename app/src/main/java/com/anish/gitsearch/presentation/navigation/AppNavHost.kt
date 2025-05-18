@@ -1,17 +1,22 @@
 package com.anish.gitsearch.presentation.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.anish.gitsearch.presentation.details.RepositoryDetailsScreen
 import com.anish.gitsearch.presentation.home.HomeScreen
 import com.anish.gitsearch.presentation.login.LoginScreen
 import com.anish.gitsearch.presentation.login.LoginViewModel
+import com.anish.gitsearch.presentation.profile.ProfileScreen
 
 @Composable
 fun AppNavHost(
@@ -28,6 +33,7 @@ fun AppNavHost(
     } else {
         startDestination
     }
+    Log.d("anish", "isAuthenticated: $isAuthenticated")
 
     NavHost(
         modifier = modifier,
@@ -46,7 +52,42 @@ fun AppNavHost(
         }
 
         composable(Screen.Home.route) {
-            HomeScreen()
+            HomeScreen(
+                onNavigateToProfile = {
+                    navController.navigate(Screen.Profile.route)
+                },
+                onNavigateToDetails = {  repository->
+                    navController.navigate(Screen.RepositoryDetails.createRoute(repository.id))
+                }
+            )
+        }
+        composable(Screen.Profile.route) {
+            ProfileScreen(
+                onNavigateBack = {
+                    navController.navigateUp()
+                },
+                onSignOut = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(Screen.Home.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+        composable(
+            route = Screen.RepositoryDetails.route,
+            arguments = listOf(
+                navArgument(name = "repoId") {
+                    type = NavType.LongType
+                }
+            )
+        ) {
+            RepositoryDetailsScreen(
+                onNavigateBack = {
+                    navController.navigateUp()
+                },
+            )
+
+
         }
     }
 }

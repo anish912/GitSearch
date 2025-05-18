@@ -129,7 +129,7 @@ fun LoginScreen(
                                 IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
                             )
                         } catch (e: Exception) {
-                            Log.d("error","eeroe->$e")
+                            Log.d("anish","eeroe->$e")
                             Timber.e(e, "Google sign-in failed-$e")
                             snackbarHostState.showSnackbar("Unable to start Google Sign-In")
                         }

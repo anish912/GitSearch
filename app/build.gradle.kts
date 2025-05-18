@@ -90,7 +90,13 @@ dependencies {
     implementation(libs.kotlinx.coroutines)
 
     // Coil
-    implementation(libs.coil)
+    //implementation(libs.coil)
+   // implementation("io.coil-kt.coil3:coil-compose:3.2.0")
+  //  implementation("io.coil-kt.coil3:coil-network-okhttp:3.2.0")
+    implementation("io.coil-kt:coil:2.7.0")
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
+   // implementation("io.coil-kt:coil-network-okhttp:2.7.0")
 
     // Timber
     implementation(libs.timber)
